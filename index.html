@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web development tests</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1 class="text-center text-capitalize text-info">IQ Hub Academy</h1>
+        <h2 class="text-center">Тестирование к курсу Front-end 2.0</h2>
+        <div class="result"></div>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <article class="registration">
+            <h3 class="text-center">Привет, ты на странице тестирования. Кратко о главном:</h3>
+            <ul class="center-block">
+                <li>у тебя есть 1 попытка;</li>
+                <li>у тебя 15 минут(счетчик в правом верхнем угле) на 15 вопросов;</li>
+                <li>вопросы будут идти по кругу и ты сможешь пропустить вопрос, вернувшись к нему позже;</li>
+                <li>обрати внимание: некоторые вопросы требуют несколько вариантов ответа;</li>
+                <li>если в вопросе есть 2 правильных ответа, а ты отметил только один, то тебе засчитывает 0,5 балла</li>
+                <li>если в вопросе есть 2 правильных ответа, а ты отметил один вариант правильно, второй не правильно,
+                    то увы у тебя будет 0 баллов за этот вопрос;</li>
+                <li>если ты не дал ответ на какой-либо вопрос, а время закончилось, ты получаешь 0 баллов за этот вопрос</li>
+            </ul>
+            <h3 class="text-center">Готов? Введи свои данные и вперед!</h3>
+
+
+            <form class="form">
+                <div class="form-group">
+                    <input type="text" class="form-control center-block" id="name" placeholder="Введите имя и фамилию" required>
+                </div>
+
+                <button class="btn btn-danger center-block" id="start">Приступить!</button>
+            </form>
+
+
+
+        </article>
+
+
+        <article class="test-section hidden">
+
+            <div class="test-header">
+                <div class="test-fio">
+                    <div class="text-center">
+                        <div>ФИО:</div>
+                        <div class="fio"></div>
+                    </div>
+                </div>
+                <div class="test-timer">
+                    <div class="text-center">Осталось:</div>
+                    <div class="text-center">
+                        <span class="mins">00</span><span> мин.</span>
+                        <span class="seconds">00</span><span> сек.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-section center-block">
+                <div class="test-question text-center">Что из элементов CSS используется в приведенном коде (несколько ответов)?
+                    .class { background: red; }</div>
+                <div class="test-options">
+                    <form>
+
+                    </form>
+                </div>
+            </div>
+
+            <button class="center-block btn btn-success" id="next">Далее</button>
+
+        </article>
+
+
+    </div>
+</main>
+<!--<footer class="navbar-fixed-bottom row-fluid">-->
+    <!--<div class="container result">-->
+    <!--</div>-->
+<!--</footer>-->
+<script src="js/main.js"></script>
+</body>
+</html>
