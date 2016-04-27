@@ -2,10 +2,11 @@
 
 (function () {
 
-    var score = 0;
+    var score = 0,
+        flag = true; // flag for showResult function (executes once)
 
     var timer = (function () {
-        var remainSec = 200; //seconds
+        var remainSec = 30; //seconds
         return {
             init: function () {
                 var _this = this;
@@ -20,21 +21,23 @@
             },
 
             showResult: function () {
-                $('main').animate({
-                    opacity: 0,
-                    paddingTop: 200
-                }, 2000, function(){
-                    $(this).toggleClass('hidden');
-                });
-                $('#next').toggleClass('hidden');
+                if (flag) {
+                    $('main').animate({
+                        opacity: 0,
+                        paddingTop: 200
+                    }, 2000, function () {
+                        $(this).toggleClass('hidden');
+                    });
+                    $('#next').toggleClass('hidden');
 
 
-                var resultMarkup = '<h2 class="text-center footer-result">Набранное кол-во баллов: ' + score + ' </h2>';
-                $('.result').append(resultMarkup);
+                    var resultMarkup = '<h2 class="text-center footer-result">Набранное кол-во баллов: ' + score + ' </h2>';
+                    $('.result').append(resultMarkup);
 
-                $('.result').animate({
-                    opacity: 1
-                }, 2000);
+                    $('.result').animate({
+                        opacity: 1
+                    }, 2000);
+                }
 
             },
 
@@ -493,6 +496,7 @@
                     opacity: 1
                 }, 2000);
 
+                flag = false; //prevent showResult function from timer module
             },
 
             checkAnswer: function(answers){

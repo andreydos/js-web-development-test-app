@@ -1,13 +1,12 @@
 .test-header {
     display: flex;
     justify-content: space-between;
-
 }
 
 .question-section,
 .test-timer,
 .test-fio {
-    /*width: 25%;*/
+    margin-bottom: 5px;
     padding: 15px;
     border: 2px solid cadetblue;
     border-radius: 10px;
@@ -15,7 +14,6 @@
 
 .question-section {
     width: 50%;
-    /*height: 400px;*/
     margin: auto;
     margin-bottom: 30px;
     padding: 5%;
@@ -33,7 +31,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /*vertical-align: middle;*/
     background-color: rgba(206, 235, 245, .3);
     border-radius: 10px;
     opacity: 0;
@@ -41,6 +38,17 @@
 
 input[type="checkbox"] {
     white-space: pre;
+}
+
+@media (max-width : 768px ) {
+
+    .test-fio {
+        display: none;
+    }
+    .test-timer {
+        margin: auto;
+        margin-bottom: 5px;
+    }
 }
 
 
