@@ -5,8 +5,10 @@
     var score = 0,
         flag = true; // flag for showResult function (executes once)
 
+
+
     var timer = (function () {
-        var remainSec = 30; //seconds
+        var remainSec = 900; //seconds
         return {
             init: function () {
                 var _this = this;
@@ -21,22 +23,28 @@
             },
 
             showResult: function () {
+
+                var tableResult = $('.table-result');
                 if (flag) {
-                    $('main').animate({
+                    $('.test-section').animate({
                         opacity: 0,
                         paddingTop: 200
-                    }, 2000, function () {
+                    }, 2000, function(){
                         $(this).toggleClass('hidden');
                     });
                     $('#next').toggleClass('hidden');
 
 
-                    var resultMarkup = '<h2 class="text-center footer-result">Набранное кол-во баллов: ' + score + ' </h2>';
-                    $('.result').append(resultMarkup);
+                    var resultMarkup = '<h2 class="text-center footer-result">Набранное кол-во баллов: ' + score.toFixed(2) + ' </h2>';
+                    tableResult.append(resultMarkup);
 
-                    $('.result').animate({
+                    tableResult.animate({
                         opacity: 1
                     }, 2000);
+
+                    tableResult.toggleClass('hidden');
+
+                    $('footer').toggleClass('hidden');
                 }
 
             },
@@ -377,12 +385,16 @@
                 }
             ],
             currentId = 0,
-            currentRightAnswer = [];
+            currentRightAnswer = [],
+            currentQuestion = {},
+            totalQuestionQuantity = 15;
 
         return {
             init: function(){
                 var
                     _this = this;
+
+                $('.header-subtitle').toggleClass('hidden');
 
                 _this.showNextQuestion();
 
@@ -444,14 +456,14 @@
                     answerVariant = _this.htmlEncode(answerVariant); //encode possible  < tags >
 
                     var answersMarkupCheckbox = '<div class="checkbox">\
-                                    \n\t<label>\
-                                    \n\t\t<input type="checkbox" value="' + answerVariant + '">' + answerVariant + '\
-                                    \n\t</label>\
+                                    <label>\
+                                    <input type="checkbox" value="' + answerVariant + '">' + answerVariant + '\
+                                    </label>\
                                     </div>';
                     var answersMarkupRadio = '<div class="radio">\
-                                    \n\t<label>\
-                                    \n\t\t<input type="radio" name="answerRadio" value="' + answerVariant + '">' + answerVariant + '\
-                                    \n\t</label>\
+                                    <label>\
+                                    <input type="radio" name="answerRadio" value="' + answerVariant + '">' + answerVariant + '\
+                                    </label>\
                                     </div>';
 
                     if (currentRightAnswer.length > 1) {
@@ -465,22 +477,27 @@
             showNextQuestion: function(){
                 var _this = this;
 
-                if (answersQuantity < 15) {
-                    var question = _this.selectNextQuestion();
+                if (answersQuantity < totalQuestionQuantity) {
+                    currentQuestion = _this.selectNextQuestion()
 
-                    if (question !== undefined) {
-                        $('.test-question').text(question.question);
+                    if (currentQuestion !== undefined) {
+                        $('.test-question').text(currentQuestion.question);
                         $('form').empty();  //clear previous markup from <form>
-                        _this.showAnswerOptions(question);
-                        currentId = question.id;
+                        _this.showAnswerOptions(currentQuestion);
+                        currentId = currentQuestion.id;
                     }
                 } else {
                     _this.showResult();
                 }
+
+                var footerProgress = 'Вы ответили на ' + answersQuantity + ' вопросов из ' + totalQuestionQuantity;
+                $('.footer-progress').text(footerProgress);
             },
 
             showResult: function () {
-                $('main').animate({
+
+                var tableResult = $('.table-result');
+                $('.test-section').animate({
                     opacity: 0,
                     paddingTop: 200
                 }, 2000, function(){
@@ -489,12 +506,16 @@
                 $('#next').toggleClass('hidden');
 
 
-                var resultMarkup = '<h2 class="text-center footer-result">Набранное кол-во баллов: ' + score + ' </h2>';
-                $('.result').append(resultMarkup);
+                var resultMarkup = '<h2 class="text-center">Набранное кол-во баллов: ' + score.toFixed(2) + ' </h2>';
+                tableResult.append(resultMarkup);
 
-                $('.result').animate({
+                tableResult.animate({
                     opacity: 1
                 }, 2000);
+
+                tableResult.toggleClass('hidden');
+
+                $('footer').toggleClass('hidden');
 
                 flag = false; //prevent showResult function from timer module
             },
@@ -515,6 +536,28 @@
                     }
                 }
                 score += tempScore;
+                this.writeResultToTable(tempScore);
+            },
+
+            writeResultToTable: function(result){
+
+                var classValue = '';
+                switch (result) {
+                    case 0:
+                        classValue = 'danger';
+                        break;
+                    case 1:
+                        classValue = 'success';
+                        break;
+                    default:
+                        classValue = 'warning';
+                }
+
+                var resultRow = '<tr class="' + classValue + '">\
+                                    <td>' + currentQuestion.question + '</td>\
+                                    <td>' + result.toFixed(2) + '</td>\
+                                    </tr>';
+                $('.result').append(resultRow);
             },
 
             htmlEncode: function(value){
